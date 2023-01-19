@@ -13,7 +13,7 @@ class _TransportationScreenState extends State<TransportationScreen> {
 
   int selectedIndexColor=0;
 
-  String? SelectedBus;
+  String SelectedBus='BUS 1';
   List SchoolBusCount = [
     'BUS 1',
     'BUS 2',
@@ -182,7 +182,7 @@ class _TransportationScreenState extends State<TransportationScreen> {
                                       ])),
                               child: Center(
                                 child: Text(
-                                  SelectedBus!,
+                                  SelectedBus,
                                  //'data',
                                   style: TextStyle(
                                       color: Colors.white,

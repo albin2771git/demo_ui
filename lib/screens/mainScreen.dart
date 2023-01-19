@@ -1,6 +1,6 @@
 import 'package:demo_ui/screens/HomeScreem.dart';
 import 'package:demo_ui/screens/class.dart';
-import 'package:demo_ui/screens/fees.dart';
+import 'package:demo_ui/screens/feesSection/feesScreen.dart';
 import 'package:demo_ui/screens/staff.dart';
 import 'package:demo_ui/screens/student.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +22,7 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
-  var body = [Fees(), classSection(), HomeScreen(), Staff(), Student()];
+  var body = [feesScreen(), classSection(), HomeScreen(), Staff(), Student()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
