@@ -5,8 +5,8 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 import '../HomeScreem.dart';
-import '../class.dart';
-import '../fees.dart';
+
+
 import '../staff.dart';
 import '../student.dart';
 

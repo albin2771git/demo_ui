@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'models/TransportationDatafetch.dart';
+import 'models/transportationData.dart';
+
 class TransportationScreen extends StatefulWidget {
   const TransportationScreen({Key? key}) : super(key: key);
 
@@ -9,11 +12,32 @@ class TransportationScreen extends StatefulWidget {
 }
 
 class _TransportationScreenState extends State<TransportationScreen> {
+  TransportationDatafetch TransportationDatafetchList =
+      TransportationDatafetch();
+  num? vehicileIdIndex;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _transportdatafetchfunction();
+    _ListTileSelectIndex(0);
+    super.initState();
+  }
+
+  // void dispose() {
+  //   _tabController.dispose();
+  // }
+
   int SelectedIndex = 0;
 
-  int selectedIndexColor=0;
+  int selectedIndexColor = 0;
 
-  String SelectedBus='BUS 1';
+  //---------ListTile index select
+  int ListTileIndex = 0;
+  int ListTileSelectedIndexColor = 0;
+  int driverSelect = 0;
+
+  String SelectedBus = 'BUS 1';
   List SchoolBusCount = [
     'BUS 1',
     'BUS 2',
@@ -26,17 +50,60 @@ class _TransportationScreenState extends State<TransportationScreen> {
     'BUS 9'
   ];
   List BUS_1TripCount = ['Test Trip', 'Trip R1', 'Trip R11'];
+  List BusTripFromApi = [];
 
+  //----------
+  var Details = new Map();
+
+  //num i=0;
+  void _ListTileSelectIndex(int index) {
+    setState(() {
+      ListTileIndex = index;
+      ListTileSelectedIndexColor = index;
+      //driverSelect=index;
+    });
+  }
+
+  //----------------
+
+//----------------
   void _IndexSelect(int index) {
     setState(() {
       SelectedIndex = index;
       selectedIndexColor = index;
-      SelectedBus=SchoolBusCount[index];
+      SelectedBus = TransportationDatafetchList
+              .data?.transportationVehcileList![index].vehcileName ??
+          '';
       print("Selected $SelectedBus");
 
-      // isSelected=!isSelected;
+      //----------fetching vehicle id
+      vehicileIdIndex = TransportationDatafetchList
+          .data?.transportationVehcileList![index].vehcileId;
+      print('selected vehicileid is $vehicileIdIndex');
+      BusTripFromApi.clear();
+
+      // print("selected vehicle id from api2 ${TransportationDatafetchList.data?.transportationTripDetails![index].vehicleId}");
+      TransportationDatafetchList.data?.transportationTripDetails!
+          .forEach((element) {
+        print(element.vehicleId);
+        //  BusTripFromApi.add(element.vehicleId);
+
+        //------------------
+        //   BusTripFromApi.clear();
+        if (element.vehicleId == vehicileIdIndex) {
+          print(TransportationDatafetchList
+              .data?.transportationTripDetails![index].vehicleId);
+          BusTripFromApi.add(element);
+        }
+      });
+      print("lenth${BusTripFromApi.length.toString()}");
+      ;
+
+      //  for( i;i<=TransportationDatafetchList.data?.transportationTripDetails!.length;i++)
     });
   }
+
+  //-----------tab controller
 
 // void _selectedIndexColor(){
 //     setState(() {
@@ -92,7 +159,8 @@ class _TransportationScreenState extends State<TransportationScreen> {
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height,
                           child: GridView.builder(
-                              itemCount: SchoolBusCount.length,
+                              itemCount: TransportationDatafetchList
+                                  .data?.transportationVehcileList!.length,
                               gridDelegate:
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                       crossAxisCount: 6,
@@ -102,9 +170,9 @@ class _TransportationScreenState extends State<TransportationScreen> {
                                 return GestureDetector(
                                   onTap: () {
                                     _IndexSelect(index);
-
                                     // _selectedIndexColor();
-
+                                    // vehicileIdIndex=TransportationDatafetchList.data?.transportationVehcileList![index].vehcileId;
+                                    // print('selected $vehicileIdIndex');
                                     print(index);
                                   },
                                   child: Container(
@@ -131,7 +199,13 @@ class _TransportationScreenState extends State<TransportationScreen> {
                                                   ])),
                                     child: Center(
                                       child: Text(
-                                        SchoolBusCount[index],
+                                        //  SchoolBusCount[index],
+                                        TransportationDatafetchList
+                                                .data
+                                                ?.transportationVehcileList![
+                                                    index]
+                                                .vehcileName ??
+                                            '',
                                         style: TextStyle(color: Colors.white),
                                       ),
                                     ),
@@ -183,7 +257,7 @@ class _TransportationScreenState extends State<TransportationScreen> {
                               child: Center(
                                 child: Text(
                                   SelectedBus,
-                                 //'data',
+                                  //'data',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 18,
@@ -202,7 +276,7 @@ class _TransportationScreenState extends State<TransportationScreen> {
                                   borderRadius: BorderRadius.circular(9)),
                               child: Center(
                                 child: Text(
-                                  '3 trips',
+                                  "${BusTripFromApi.length.toString()} Trips",
                                   style: TextStyle(color: Colors.white),
                                 ),
                               ),
@@ -220,49 +294,84 @@ class _TransportationScreenState extends State<TransportationScreen> {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              DefaultTabController(
-                                length: 3,
-                                child: Container(
-                                  child: Column(
+                              Container(
+                                color: Colors.black,
+                                width: MediaQuery.of(context).size.width,
+                                height: 60,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: BusTripFromApi.length,
+                                  itemBuilder: (context, index) => Column(
                                     children: [
-                                      Container(
-                                        // color: Colors.amber,
-                                        child: TabBar(
-                                          labelColor: Colors.white,
-                                          unselectedLabelColor:
-                                              Colors.grey.shade700,
-                                          tabs: [
-                                            Tab(
-                                              text: 'Test Trip',
+                                      GestureDetector(
+                                        onTap: () {
+                                          _ListTileSelectIndex(index);
+                                          print(
+                                              "vehicle id is ${BusTripFromApi[0].vehicleId}");
+                                        },
+                                        child: Container(
+                                          height: 55,
+                                          width: 90,
+                                          color: Colors.black,
+                                          child: Center(
+                                            child: Text(
+                                              BusTripFromApi[index].tripName,
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold),
                                             ),
-                                            Tab(
-                                              text: 'Trip R1',
-                                            ),
-                                            Tab(
-                                              text: 'Trip R11',
-                                            ),
-                                          ],
+                                          ),
                                         ),
                                       ),
                                       Container(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          height: 350,
-                                          color: Colors.black,
-                                          child: TabBarView(
-                                            children: [
-                                              TabViewScreen(
-                                                  drivername: "AJAD MATHUR"),
-                                              TabViewScreen(
-                                                  drivername: "HARNAND SING"),
-                                              TabViewScreen(
-                                                  drivername: "HARNAND SING"),
-                                            ],
-                                          ))
+                                        width: 90,
+                                        height: 5,
+                                        color: ListTileIndex == index
+                                            ? Colors.blue
+                                            : Colors.black,
+                                      )
                                     ],
                                   ),
                                 ),
-                              )
+                              ),
+                              Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 348,
+                                  decoration:
+                                      BoxDecoration(color: Colors.black),
+                                  child: ListTile(
+                                    leading: Icon(
+                                      FontAwesomeIcons.car,
+                                      color: Colors.white,
+                                    ),
+                                    title: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'DRIVER',
+                                          style: TextStyle(
+                                              color: Colors.grey, fontSize: 13),
+                                        ),
+                                        Text(
+                                          //  'data'
+                                          BusTripFromApi[0].vehicleId ==
+                                                      vehicileIdIndex &&
+                                                  BusTripFromApi[1].vehicleId ==
+                                                      vehicileIdIndex
+                                          //&&
+                                                  // BusTripFromApi[2].vehicleId ==
+                                                  //     vehicileIdIndex
+                                              ? BusTripFromApi[0].drivername
+                                              : 'no data',
+                                          style: TextStyle(color: Colors.white),
+                                        )
+                                      ],
+                                    ),
+                                  ))
                             ],
                           )),
                     )
@@ -275,257 +384,10 @@ class _TransportationScreenState extends State<TransportationScreen> {
       ),
     );
   }
-}
 
-class TabViewScreen extends StatelessWidget {
-  String drivername;
-
-  TabViewScreen({Key? key, required this.drivername}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        ListTile(
-          leading: Icon(
-            FontAwesomeIcons.car,
-            color: Colors.white,size: 24,
-          ),
-          title: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 10,),
-              Text(
-                'Driver',
-                style: TextStyle(color: Colors.grey.shade700),
-              ),
-              Text(
-                drivername,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700),
-              ),
-
-            ],
-          ),
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.call),
-                color: Colors.white,
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.message),
-                color: Colors.white,
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.whatsapp),
-                color: Colors.white,
-              ),
-            ],
-          ),
-        ),
-        Divider(thickness: 2,color: Colors.grey.shade900,),
-        Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20,top: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Pick Up Route',
-                style: TextStyle(
-                    color: Colors.grey.shade600,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
-              ),
-              Icon(
-                Icons.arrow_downward,
-                color: Colors.white,
-              )
-            ],
-          ),
-        ),
-        ExpansionTile(
-          leading: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-                color: Colors.amber,
-                image: DecorationImage(
-                    image: AssetImage('assets/stepper.jpeg'),
-                    fit: BoxFit.cover)),
-          ),
-          title: Text(
-            'Street 1',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          children: [
-            ListTile(
-              leading: Container(width: 30,
-                height: 30,),
-              title: Text(
-                'Student 1',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            ListTile(
-              leading: Container(width: 30,
-                height: 30,),
-              title: Text(
-                'Student 2',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            ListTile(
-              leading: Container(width: 30,
-                height: 30,),
-              title: Text(
-                'Student 3',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ],
-        ),
-        ExpansionTile(
-          leading: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-                color: Colors.amber,
-                image: DecorationImage(
-                    image: AssetImage('assets/stepper.jpeg'),
-                    fit: BoxFit.cover)),
-          ),
-          title: Text(
-            'Street 2',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          children: [
-            ListTile(
-              leading: Container(width: 30,
-              height: 30,),
-              title: Text(
-                'Student 4',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            ListTile(
-              leading: Container(width: 30,
-                height: 30,),
-              title: Text(
-                'Student 5',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            ListTile(
-              leading: Container(width: 30,
-                height: 30,),
-              title: Text(
-                'Student 6',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ],
-        ),
-        ExpansionTile(
-          leading: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-                color: Colors.amber,
-                image: DecorationImage(
-                    image: AssetImage('assets/stepper.jpeg'),
-                    fit: BoxFit.cover)),
-          ),
-          title: Text(
-            'Street 3',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          children: [
-            ListTile(
-              leading: Container(width: 30,
-                height: 30,),
-              title: Text(
-                'Student 7',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            ListTile(
-              leading: Container(width: 30,
-                height: 30,),
-              title: Text(
-                'Student 8',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            ListTile(
-              leading: Container(width: 30,
-                height: 30,),
-              title: Text(
-                'Student 9',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ],
-        ),
-        ExpansionTile(
-          leading: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-                color: Colors.amber,
-                image: DecorationImage(
-                    image: AssetImage('assets/stepper.jpeg'),
-                    fit: BoxFit.cover)),
-          ),
-          title: Text(
-            'Street 4',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          children: [
-            ListTile(
-              leading: Container(width: 30,
-                height: 30,),
-              title: Text(
-                'Student 10',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            ListTile(
-              leading: Container(width: 30,
-                height: 30,),
-              title: Text(
-                'Student 11',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            ListTile(
-              leading: Container(width: 30,
-                height: 30,),
-              title: Text(
-                'Student 12',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ],
-        ),
-
-      ],
-    );
+  void _transportdatafetchfunction() {
+    TransportationDatafetchList =
+        TransportationDatafetch.fromJson(TransportationData);
+    print(TransportationDatafetchList.data?.transportationVehcileList!);
   }
 }

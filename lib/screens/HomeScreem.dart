@@ -1,4 +1,5 @@
 import 'package:demo_ui/screens/StaffSection/staffSectionScreen.dart';
+import 'package:demo_ui/screens/classSection/class.dart';
 import 'package:demo_ui/screens/transportationSection/transportationScreenUi.dart';
 import 'package:demo_ui/widget/SchoolUpdates_grid.dart';
 import 'package:demo_ui/widget/SchoolUpdates_row.dart';
@@ -253,7 +254,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   FontAwesomeIcons.bookAtlas,
                                   color: Colors.white,
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ClassScreen()));
+                                },
                               ),
                             ),
                           ),
