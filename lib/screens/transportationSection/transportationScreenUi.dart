@@ -97,6 +97,7 @@ class _TransportationScreenState extends State<TransportationScreen> {
         }
       });
       print("lenth${BusTripFromApi.length.toString()}");
+      print("driver${BusTripFromApi[0]}")
       ;
 
       //  for( i;i<=TransportationDatafetchList.data?.transportationTripDetails!.length;i++)
@@ -299,6 +300,7 @@ class _TransportationScreenState extends State<TransportationScreen> {
                                 width: MediaQuery.of(context).size.width,
                                 height: 60,
                                 child: ListView.builder(
+                                  shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
                                   itemCount: BusTripFromApi.length,
                                   itemBuilder: (context, index) => Column(
@@ -357,16 +359,14 @@ class _TransportationScreenState extends State<TransportationScreen> {
                                               color: Colors.grey, fontSize: 13),
                                         ),
                                         Text(
-                                          //  'data'
-                                          BusTripFromApi[0].vehicleId ==
-                                                      vehicileIdIndex &&
-                                                  BusTripFromApi[1].vehicleId ==
-                                                      vehicileIdIndex
-                                          //&&
-                                                  // BusTripFromApi[2].vehicleId ==
-                                                  //     vehicileIdIndex
-                                              ? BusTripFromApi[0].drivername
-                                              : 'no data',
+                                          'data',
+                                          // BusTripFromApi[0].vehicleId ==
+                                          //             vehicileIdIndex &&
+                                          //         BusTripFromApi[1].vehicleId ==
+                                          //             vehicileIdIndex
+                                          //     ? BusTripFromApi[0].drivername
+                                          //     : 'no data',
+                                        //  BusTripFromApi[0].vehicleId,
                                           style: TextStyle(color: Colors.white),
                                         )
                                       ],
