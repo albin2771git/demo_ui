@@ -28,3 +28,13 @@ samples, guidance on mobile development, and a full API reference.
 ![Screenshot_20230123_163248](https://user-images.githubusercontent.com/107807403/214037869-22a40e3d-4ad8-40f8-9e5b-f55f01707c94.png)
 ![Screenshot_20230124_131138](https://user-images.githubusercontent.com/107807403/214253202-4dbae7ee-4bef-4aac-aa0c-f0405bc526e3.png)
 ![Screenshot_20230124_131051](https://user-images.githubusercontent.com/107807403/214253223-6bc8f7d6-1239-4982-8554-532ce94151e5.png)
+#-------------------------
+http Post 
+api fetch
+------------------------------
+
+
+![Screenshot_20230124_144441](https://user-images.githubusercontent.com/107807403/214264651-828fa60f-dcaa-4e83-9e31-d66057b1b177.png)
+![Screenshot_20230124_152654](https://user-images.githubusercontent.com/107807403/214264672-8204d177-2d09-431a-9c24-5e5f9e412545.png)
+![Screenshot_20230124_153616](https://user-images.githubusercontent.com/107807403/214264306-4f5110f3-297a-43e1-8def-a1acbc5a30e7.png)
+
