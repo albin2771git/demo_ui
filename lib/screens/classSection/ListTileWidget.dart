@@ -15,6 +15,12 @@ class _AttendanceListTileState extends State<AttendanceListTile> {
   bool isEnabled = true;
   TextEditingController enteredtext = TextEditingController();
 
+  //-----------------
+
+  final focus = FocusNode();
+  //-----------------
+
+
   Color color = Colors.green;
 
   void setData(int value) {
@@ -77,9 +83,13 @@ class _AttendanceListTileState extends State<AttendanceListTile> {
                               color: Colors.grey.shade400,
                             ),
                             borderRadius: BorderRadius.circular(6)),
-                        child: TextField(
+                        child: TextFormField(
                           maxLines: 1,
                           minLines: 1,
+                         // textInputAction: TextInputAction.next,
+                          textInputAction: TextInputAction.next,
+                          onFieldSubmitted: (_) => FocusScope.of(context).nextFocus(),
+
                           enabled: isEnabled,
                           controller: enteredtext,
                           keyboardType: TextInputType.number,
@@ -156,4 +166,5 @@ class _AttendanceListTileState extends State<AttendanceListTile> {
               )),
         ));
   }
+
 }

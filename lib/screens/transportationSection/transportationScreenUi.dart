@@ -16,13 +16,6 @@ class _TransportationScreenState extends State<TransportationScreen> {
       TransportationDatafetch();
   num? vehicileIdIndex;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    _transportdatafetchfunction();
-    _ListTileSelectIndex(0);
-    super.initState();
-  }
 
   // void dispose() {
   //   _tabController.dispose();
@@ -60,6 +53,7 @@ class _TransportationScreenState extends State<TransportationScreen> {
     setState(() {
       ListTileIndex = index;
       ListTileSelectedIndexColor = index;
+
       //driverSelect=index;
     });
   }
@@ -104,13 +98,15 @@ class _TransportationScreenState extends State<TransportationScreen> {
     });
   }
 
-  //-----------tab controller
+  @override
+  void initState() {
+    // TODO: implement initState
+    _transportdatafetchfunction();
+    _ListTileSelectIndex(0);
+    super.initState();
+  }
 
-// void _selectedIndexColor(){
-//     setState(() {
-//       isSelected=!isSelected;
-//     });
-// }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

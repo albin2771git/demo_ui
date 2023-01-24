@@ -4,6 +4,8 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../screens/login/loginScreen.dart';
+
 class SchoolUpdated_row extends StatelessWidget {
   const SchoolUpdated_row({super.key});
 
@@ -151,6 +153,39 @@ class SchoolUpdated_row extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 10),
                     child: Text(
                       'Birthday',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  )
+                ],
+              ),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30, top: 30),
+                    child: Container(
+                      width: 70,
+                      height: 70,
+                      decoration: BoxDecoration(
+                          color: Colors.blue.shade800,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: IconButton(
+                        icon: FaIcon(
+                          FontAwesomeIcons.lockOpen,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>loginScreen()));
+                        },
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30),
+                    child: Text(
+                      'login',
                       style: TextStyle(color: Colors.white),
                     ),
                   )
