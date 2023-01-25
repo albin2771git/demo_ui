@@ -38,3 +38,13 @@ api fetch
 ![Screenshot_20230124_152654](https://user-images.githubusercontent.com/107807403/214264672-8204d177-2d09-431a-9c24-5e5f9e412545.png)
 ![Screenshot_20230124_153616](https://user-images.githubusercontent.com/107807403/214264306-4f5110f3-297a-43e1-8def-a1acbc5a30e7.png)
 
+
+#---------------------------------
+-----Bulletin---------
+
+![Screenshot_20230125_130539](https://user-images.githubusercontent.com/107807403/214506137-1735811b-c2bc-4881-b9c1-bc51627f3efe.png)
+![Screenshot_20230125_130557](https://user-images.githubusercontent.com/107807403/214506013-9ac9d21d-34fe-4981-bcff-dde69b2d5393.png)
+
+
+
+
