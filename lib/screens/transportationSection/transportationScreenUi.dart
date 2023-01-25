@@ -51,7 +51,7 @@ class _TransportationScreenState extends State<TransportationScreen> {
   //num i=0;
   void _ListTileSelectIndex(int index) {
     setState(() {
-      ListTileIndex = index;
+      ListTileIndex =index;
       ListTileSelectedIndexColor = index;
 
       //driverSelect=index;
@@ -163,14 +163,14 @@ class _TransportationScreenState extends State<TransportationScreen> {
                                       crossAxisCount: 6,
                                       mainAxisSpacing: 10,
                                       crossAxisSpacing: 10),
-                              itemBuilder: (BuildContext context, index) {
+                              itemBuilder: (BuildContext context, gridindex) {
                                 return GestureDetector(
                                   onTap: () {
-                                    _IndexSelect(index);
+                                    _IndexSelect(gridindex);
                                     // _selectedIndexColor();
                                     // vehicileIdIndex=TransportationDatafetchList.data?.transportationVehcileList![index].vehcileId;
                                     // print('selected $vehicileIdIndex');
-                                    print(index);
+                                    print(gridindex);
                                   },
                                   child: Container(
                                     height: 30,
@@ -183,7 +183,7 @@ class _TransportationScreenState extends State<TransportationScreen> {
                                         gradient: LinearGradient(
                                             begin: Alignment.topCenter,
                                             end: Alignment.bottomCenter,
-                                            colors: selectedIndexColor == index
+                                            colors: selectedIndexColor == gridindex
                                                 ? [
                                                     Colors.black,
                                                     Colors.blue.shade700,
@@ -200,7 +200,7 @@ class _TransportationScreenState extends State<TransportationScreen> {
                                         TransportationDatafetchList
                                                 .data
                                                 ?.transportationVehcileList![
-                                                    index]
+                                                    gridindex]
                                                 .vehcileName ??
                                             '',
                                         style: TextStyle(color: Colors.white),
@@ -295,41 +295,42 @@ class _TransportationScreenState extends State<TransportationScreen> {
                                 color: Colors.black,
                                 width: MediaQuery.of(context).size.width,
                                 height: 60,
-                                child: ListView.builder(
+                                child:  ListView.builder(
                                   shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
                                   itemCount: BusTripFromApi.length,
-                                  itemBuilder: (context, index) => Column(
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          _ListTileSelectIndex(index);
-                                          print(
-                                              "vehicle id is ${BusTripFromApi[0].vehicleId}");
-                                        },
-                                        child: Container(
-                                          height: 55,
-                                          width: 90,
-                                          color: Colors.black,
-                                          child: Center(
-                                            child: Text(
-                                              BusTripFromApi[index].tripName,
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold),
+                                  itemBuilder: (context, index) =>
+                                      Column(
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              _ListTileSelectIndex(index);
+                                              print(
+                                                  "vehicle id is ${BusTripFromApi[0].vehicleId}");
+                                            },
+                                            child: Container(
+                                              height: 55,
+                                              width: 90,
+                                              color: Colors.black,
+                                              child: Center(
+                                                child: Text(
+                                                  BusTripFromApi[index].tripName,
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                              ),
                                             ),
                                           ),
-                                        ),
+                                          Container(
+                                            width: 90,
+                                            height: 5,
+                                            color: ListTileIndex == index
+                                                ? Colors.blue
+                                                : Colors.black,
+                                          )
+                                        ],
                                       ),
-                                      Container(
-                                        width: 90,
-                                        height: 5,
-                                        color: ListTileIndex == index
-                                            ? Colors.blue
-                                            : Colors.black,
-                                      )
-                                    ],
-                                  ),
                                 ),
                               ),
                               Container(
@@ -363,6 +364,7 @@ class _TransportationScreenState extends State<TransportationScreen> {
                                           //     ? BusTripFromApi[0].drivername
                                           //     : 'no data',
                                         //  BusTripFromApi[0].vehicleId,
+                                         // BusTripFromApi[0].drivername,
                                           style: TextStyle(color: Colors.white),
                                         )
                                       ],
@@ -380,6 +382,7 @@ class _TransportationScreenState extends State<TransportationScreen> {
       ),
     );
   }
+
 
   void _transportdatafetchfunction() {
     TransportationDatafetchList =
