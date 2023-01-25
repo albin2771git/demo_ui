@@ -7,6 +7,12 @@ class LoginWelcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          title: Text(
+        'Welcome',
+        style: TextStyle(
+            color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
+      )),
       body: Center(
         child: Text(
           'welcome $username',

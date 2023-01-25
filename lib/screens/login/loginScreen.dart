@@ -17,11 +17,9 @@ class loginScreen extends StatefulWidget {
 class _loginScreenState extends State<loginScreen> {
   var formkey = GlobalKey<FormState>();
 
-  TextEditingController uri=TextEditingController();
-  TextEditingController username=TextEditingController();
-  TextEditingController password=TextEditingController();
-
-
+  TextEditingController uri = TextEditingController();
+  TextEditingController username = TextEditingController();
+  TextEditingController password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -71,13 +69,13 @@ class _loginScreenState extends State<loginScreen> {
                     ),
                     TextFormField(
                       controller: uri,
-                      validator:(uridata){
-                        if(uridata!.isEmpty){
+                      validator: (uridata) {
+                        if (uridata!.isEmpty) {
                           return 'enter url';
-                        }else{
+                        } else {
                           return null;
                         }
-                      } ,
+                      },
                       maxLines: 1,
                       textInputAction: TextInputAction.next,
                       style: TextStyle(color: Colors.white, fontSize: 19),
@@ -107,13 +105,13 @@ class _loginScreenState extends State<loginScreen> {
                     ),
                     TextFormField(
                       controller: username,
-                      validator:(usernamedata){
-                        if(!usernamedata!.contains('@')){
+                      validator: (usernamedata) {
+                        if (!usernamedata!.contains('@')) {
                           return 'enter correct username';
-                        }else{
+                        } else {
                           return null;
                         }
-                      } ,
+                      },
                       maxLines: 1,
                       textInputAction: TextInputAction.next,
                       style: TextStyle(color: Colors.white, fontSize: 19),
@@ -143,13 +141,13 @@ class _loginScreenState extends State<loginScreen> {
                     ),
                     TextFormField(
                       controller: password,
-                      validator:(passworddata){
-                        if(passworddata!.isEmpty){
+                      validator: (passworddata) {
+                        if (passworddata!.isEmpty) {
                           return 'enter correct password';
-                        }else{
+                        } else {
                           return null;
                         }
-                      } ,
+                      },
                       obscureText: true,
                       textInputAction: TextInputAction.done,
                       maxLines: 1,
@@ -190,12 +188,17 @@ class _loginScreenState extends State<loginScreen> {
                     width: 300,
                     child: ElevatedButton(
                       onPressed: () {
-                      //  addUser();
-                        final valid=formkey.currentState!.validate();
-                        if(valid){
+                        //  addUser();
+                        final valid = formkey.currentState!.validate();
+                        if (valid) {
                           addUser();
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginWelcome(username: username.text,)));
-                        }else{
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginWelcome(
+                                        username: username.text,
+                                      )));
+                        } else {
                           Fluttertoast.showToast(
                               msg: "enter valid details",
                               toastLength: Toast.LENGTH_SHORT,
@@ -204,7 +207,6 @@ class _loginScreenState extends State<loginScreen> {
                               backgroundColor: Colors.red,
                               textColor: Colors.white,
                               fontSize: 16.0);
-                          
                         }
                       },
                       child: Text(
@@ -223,12 +225,13 @@ class _loginScreenState extends State<loginScreen> {
       ),
     );
   }
+
   Future addUser() async {
     Map data = {"username": username.text, "password": password.text};
     var body = jsonEncode(data);
 
     final response = await http.post(
-        Uri.parse(uri.text+'/api/v2/principal/auth/login'),
+        Uri.parse(uri.text + '/api/v2/principal/auth/login'),
         headers: {"Content-Type": "Application/json"},
         body: body);
 
