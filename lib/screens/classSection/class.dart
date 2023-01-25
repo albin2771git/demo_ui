@@ -1,11 +1,9 @@
-
 import 'package:demo_ui/screens/classSection/ListTileWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 import 'data.dart';
-
 
 class ClassScreen extends StatefulWidget {
   const ClassScreen({super.key});
@@ -17,18 +15,18 @@ class ClassScreen extends StatefulWidget {
 class _ClassScreenState extends State<ClassScreen> {
   int tabselect = 0;
 
-
-
-
-
-  List<DropdownMenuItem> datalist = data.map((e) => DropdownMenuItem(value: e['id'],child: Text(e['type']),)).toList();
+  List<DropdownMenuItem> datalist = data
+      .map((e) => DropdownMenuItem(
+            value: e['id'],
+            child: Text(e['type']),
+          ))
+      .toList();
 
   void _tabselect(int tabindex) {
     setState(() {
       tabselect = tabindex;
     });
   }
-
 
   List colorlist = [
     Colors.green,
@@ -39,7 +37,6 @@ class _ClassScreenState extends State<ClassScreen> {
     Colors.green,
     Colors.green,
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -66,30 +63,20 @@ class _ClassScreenState extends State<ClassScreen> {
           ),
         ),
         body: Container(
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
-          height: MediaQuery
-              .of(context)
-              .size
-              .height,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           color: Colors.white,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
                 height: 50,
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
+                width: MediaQuery.of(context).size.width,
                 color: Colors.black,
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: 2,
-                    itemBuilder: (context, index) =>
-                        Column(
+                    itemBuilder: (context, index) => Column(
                           //  mainAxisSize: MainAxisSize.min,
                           children: [
                             GestureDetector(
@@ -120,87 +107,82 @@ class _ClassScreenState extends State<ClassScreen> {
               ),
               Expanded(
                   child: Container(
-                    color: Colors.white,
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(13.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(9),
+                        border: Border.all(
+                            color: Colors.grey.shade400,
+                            width: 2,
+                            strokeAlign: StrokeAlign.outside)),
                     child: Padding(
-                      padding: const EdgeInsets.all(13.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(9),
-                            border: Border.all(
-                                color: Colors.grey.shade400,
-                                width: 2,
-                                strokeAlign: StrokeAlign.outside)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Column(
-                            children: [
-                              Container(
-                                width: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .width,
-                                height: 90,
-                                color: Colors.white,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment
-                                      .spaceBetween,
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: 90,
+                            color: Colors.white,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(children: [
+                                  Text(''),
+                                  Text(
+                                    'Student Name',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    'Roll No | Admin.No',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 12,
+                                    ),
+                                  )
+                                ]),
+                                Column(
                                   children: [
-                                    Column(children: [
-                                      Text(''),
-                                      Text(
-                                        'Student Name',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        'Roll No | Admin.No',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12,
-                                        ),
-                                      )
-                                    ]),
-                                    Column(
-                                      children: [
-                                        ElevatedButton(
-                                          onPressed: () {},
-                                          child: Text('Save'),
-                                          style: ElevatedButton.styleFrom(
-                                              backgroundColor: Colors.red),
-                                        ),
-                                        Text('Obt.Mark')
-                                      ],
-                                    )
+                                    ElevatedButton(
+                                      onPressed: () {},
+                                      child: Text('Save'),
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: Colors.red),
+                                    ),
+                                    Text('Obt.Mark')
                                   ],
-                                ),
-                              ),
-                              Expanded(
-                                child: ListView.separated(
-
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: 9,
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) =>AttendanceListTile(),
-                                  separatorBuilder:
-                                      (BuildContext context, int index) {
-                                    return Divider(
-                                      thickness: 2,
-                                      color: Colors.grey.shade300,
-                                    );
-                                  },
-                                ),
-                              )
-                            ],
+                                )
+                              ],
+                            ),
                           ),
-                        ),
+                          Expanded(
+                            child: ListView.separated(
+                              scrollDirection: Axis.vertical,
+                              itemCount: 9,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) =>
+                                  AttendanceListTile(),
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return Divider(
+                                  thickness: 2,
+                                  color: Colors.grey.shade300,
+                                );
+                              },
+                            ),
+                          )
+                        ],
                       ),
                     ),
-                  ))
+                  ),
+                ),
+              ))
             ],
           ),
         ));
   }
-
 }
