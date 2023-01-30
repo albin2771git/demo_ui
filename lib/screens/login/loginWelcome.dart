@@ -1,9 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginWelcome extends StatelessWidget {
-  LoginWelcome({Key? key, required this.username}) : super(key: key);
-  String username;
+class LoginWelcome extends StatefulWidget {
+  LoginWelcome({Key? key,}) : super(key: key);
 
+  @override
+  State<LoginWelcome> createState() => _LoginWelcomeState();
+}
+
+class _LoginWelcomeState extends State<LoginWelcome> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    initial();
+    super.initState();
+  }
+late SharedPreferences logindata;
+
+ String? username;
+void initial()async{
+  logindata=await SharedPreferences.getInstance();
+  setState(() {
+    username=logindata.getString('username')!;
+
+  });
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(

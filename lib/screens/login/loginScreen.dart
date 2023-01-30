@@ -1,11 +1,12 @@
 import 'dart:convert';
-
 import 'package:demo_ui/screens/login/LineWidget.dart';
 import 'package:demo_ui/screens/login/loginWelcome.dart';
-import 'package:demo_ui/screens/splash/rowWIdgetline.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:html';
 
 class loginScreen extends StatefulWidget {
   const loginScreen({Key? key}) : super(key: key);
@@ -15,11 +16,51 @@ class loginScreen extends StatefulWidget {
 }
 
 class _loginScreenState extends State<loginScreen> {
-  var formkey = GlobalKey<FormState>();
+//  Datafromapi Datafromapifetch = Datafromapi();
 
+  var formkey = GlobalKey<FormState>();
+  late SharedPreferences logindata;
+  late bool newuser;
+
+  final _storage = FlutterSecureStorage();
   TextEditingController uri = TextEditingController();
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
+
+  bool islogged = false;
+
+//---------variable for used to store url,username,password in locally
+  var urlstored;
+  var usernamestored;
+  var passwordstored;
+
+//---------------
+
+  var fetchdata;
+
+  //----------------------
+  @override
+  void initState() {
+    // TODO: implement initState
+    check_user_islogged();
+    _readFromStorage();
+    super.initState();
+  }
+
+  void check_user_islogged() async {
+    logindata = await SharedPreferences.getInstance();
+    newuser = (logindata.getBool('login') ?? true);
+    // print('newUser');
+
+    if (newuser == false) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => LoginWelcome()));
+    }
+  }
+
+  // get id => null;
+// late SharedPreferences SharedPreferences;
+  //DataModelapi datafetchapi=DataModelapi();
 
   @override
   Widget build(BuildContext context) {
@@ -192,12 +233,13 @@ class _loginScreenState extends State<loginScreen> {
                         final valid = formkey.currentState!.validate();
                         if (valid) {
                           addUser();
+                          logindata.setBool('login', false);
+                          logindata.setString('username', username.text);
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => LoginWelcome(
-                                        username: username.text,
-                                      )));
+                                  builder: (context) => LoginWelcome()));
+                          _onSubmit();
                         } else {
                           Fluttertoast.showToast(
                               msg: "enter valid details",
@@ -230,11 +272,98 @@ class _loginScreenState extends State<loginScreen> {
     Map data = {"username": username.text, "password": password.text};
     var body = jsonEncode(data);
 
-    final response = await http.post(
-        Uri.parse(uri.text + '/api/v2/principal/auth/login'),
-        headers: {"Content-Type": "Application/json"},
-        body: body);
+    http.Response response =
+        await http.post(Uri.parse(uri.text + '/api/v2/principal/auth/login'),
+            headers: {"Content-Type": "Application/json"},
 
-    print(response.body);
+            //---------
+            body: body);
+    var fetchdata = jsonDecode(response.body);
+    print(fetchdata['data']['token']);
+    //------------
+    // Datafromapifetch=fetchdata['data'];
+    // print('hello ${Datafromapifetch.data?.id!}');
+
+    // User user=User.fromJson(jsonDecode(response.body));
+    // print('response body=${user.id}');
+
+    //---------------
+
+    // print(response.body);
+    // print('token is ${response.body}');
+    // fetchdata=response.body.toString();
+    // print(fetchdata[5].toString());
+  }
+
+  //-----------storing login url,username,password
+  _onSubmit() async {
+    await _storage.write(key: 'urlvalue', value: uri.text);
+    await _storage.write(key: 'usernamevalue', value: username.text);
+    await _storage.write(key: 'passwordvalue', value: password.text);
+    //--------
+  }
+
+  Future<void> _readFromStorage() async {
+    uri.text = await _storage.read(key: 'urlvalue') ?? '';
+    username.text = await _storage.read(key: 'usernamevalue') ?? '';
+    password.text = await _storage.read(key: 'passwordvalue') ?? '';
+    //------------------------
+    urlstored = await _storage.read(key: 'urlvalue') ?? '';
+    usernamestored = await _storage.read(key: 'usernamevalue') ?? '';
+    passwordstored = await _storage.read(key: 'passwordvalue') ?? '';
+
+    //------------------
+
+    // setState(() {
+    //   islogged=!islogged;
+    // });
+    // if(islogged==true){
+    //   Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginWelcome(username: username.text)));
+    // }else{
+    //
+    // }
+    print('Strored url is $urlstored');
+    print('Strored username is $usernamestored');
+    print('Strored password is $passwordstored');
   }
 }
+
+// // //
+// class User {
+//   final id;
+//   final academicYearId;
+
+// //   final String academicYear;
+// //   final String roleId;
+// //   final String token;
+// //   final String name;
+// //   final String imgUrl;
+// //   final String designation;
+// //   final bool tempPassword;
+// //   final bool status;
+// //   final String message;
+// //   final String schoolName;
+// //   final int mobileNo;
+// //   final String firebaseTopic;
+// //   final bool otpSendStatus;
+// //   final bool isTwoFactorAuthenticationEnabled;
+// //
+  // User({
+  //   required this.id,
+  //   required this.academicYearId,
+//     //  this.academicYear,
+// //       this.roleId,
+// //       this.token,
+// //       this.name,
+// //       this.imgUrl,
+// //       this.designation,
+// //       this.tempPassword,
+// //       this.status,
+// //       this.message,
+// //       this.schoolName,
+// //       this.mobileNo,
+// //       this.firebaseTopic,
+// //       this.otpSendStatus,
+// //       this.isTwoFactorAuthenticationEnabled
+//   });
+// }

@@ -1,3 +1,5 @@
+import 'package:demo_ui/screens/bulletin/bulletinFirstScreen.dart';
+import 'package:demo_ui/screens/bulletin/createBulletin.dart';
 import 'package:demo_ui/screens/subScreens/birthdayScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -40,7 +42,12 @@ class SchoolUpdated_row extends StatelessWidget {
                           FontAwesomeIcons.bullhorn,
                           color: Colors.white,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => BulletinFirstScreen()));
+                        },
                       ),
                     ),
                   ),
@@ -174,7 +181,10 @@ class SchoolUpdated_row extends StatelessWidget {
                           color: Colors.white,
                         ),
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>loginScreen()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => loginScreen()));
                         },
                       ),
                     ),
