@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:demo_ui/screens/HomeScreem.dart';
 import 'package:demo_ui/screens/login/LineWidget.dart';
 import 'package:demo_ui/screens/login/loginWelcome.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:html';
 
 class loginScreen extends StatefulWidget {
   const loginScreen({Key? key}) : super(key: key);
@@ -33,6 +33,8 @@ class _loginScreenState extends State<loginScreen> {
   var urlstored;
   var usernamestored;
   var passwordstored;
+
+  var userdetails;
 
 //---------------
 
@@ -235,6 +237,8 @@ class _loginScreenState extends State<loginScreen> {
                           addUser();
                           logindata.setBool('login', false);
                           logindata.setString('username', username.text);
+                          logindata.setString('url', uri.text);
+                          logindata.setString('password', password.text);
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -278,9 +282,19 @@ class _loginScreenState extends State<loginScreen> {
 
             //---------
             body: body);
+
+    //------------
     var fetchdata = jsonDecode(response.body);
     print(fetchdata['data']['token']);
-    //------------
+
+    //-------------
+    await _storage.write(
+        key: 'userdetailsfetch', value: jsonEncode(fetchdata['data']));
+    userdetails = await _storage.read(key: 'userdetailsfetch') ?? '';
+    print(userdetails);
+    //----------
+
+    // logindata.setString('username', username.text);
     // Datafromapifetch=fetchdata['data'];
     // print('hello ${Datafromapifetch.data?.id!}');
 
@@ -313,6 +327,7 @@ class _loginScreenState extends State<loginScreen> {
     passwordstored = await _storage.read(key: 'passwordvalue') ?? '';
 
     //------------------
+    //userdetails = await _storage.read(key: 'userdetailsfetch') ?? '';
 
     // setState(() {
     //   islogged=!islogged;
@@ -325,6 +340,7 @@ class _loginScreenState extends State<loginScreen> {
     print('Strored url is $urlstored');
     print('Strored username is $usernamestored');
     print('Strored password is $passwordstored');
+    //----------
   }
 }
 
@@ -348,9 +364,9 @@ class _loginScreenState extends State<loginScreen> {
 // //   final bool otpSendStatus;
 // //   final bool isTwoFactorAuthenticationEnabled;
 // //
-  // User({
-  //   required this.id,
-  //   required this.academicYearId,
+// User({
+//   required this.id,
+//   required this.academicYearId,
 //     //  this.academicYear,
 // //       this.roleId,
 // //       this.token,
