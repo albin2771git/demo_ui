@@ -26,7 +26,7 @@ class _BulletinDetailScreenState extends State<BulletinDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.defaultimgdata);
+
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Color(0xff131619),
@@ -65,7 +65,7 @@ class _BulletinDetailScreenState extends State<BulletinDetailScreen> {
                         currentIndicatorColor: Colors.grey,
                         indicatorBackgroundColor: Colors.grey.shade800,
                         padding: EdgeInsets.only(bottom: 10)),
-                    itemCount: widget.imgurl!.length)),
+                    itemCount: widget.imgurl!.isEmpty?1:widget.imgurl!.length)),
             Container(
               width: MediaQuery.of(context).size.width,
               height: 250,

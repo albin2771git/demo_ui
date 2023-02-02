@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:demo_ui/screens/HomeScreem.dart';
 import 'package:demo_ui/screens/login/LineWidget.dart';
 import 'package:demo_ui/screens/login/loginWelcome.dart';
 import 'package:flutter/material.dart';
@@ -271,7 +270,7 @@ class _loginScreenState extends State<loginScreen> {
       ),
     );
   }
-
+  //
   Future addUser() async {
     Map data = {"username": username.text, "password": password.text};
     var body = jsonEncode(data);
@@ -326,6 +325,9 @@ class _loginScreenState extends State<loginScreen> {
     usernamestored = await _storage.read(key: 'usernamevalue') ?? '';
     passwordstored = await _storage.read(key: 'passwordvalue') ?? '';
 
+    //-----------
+
+
     //------------------
     //userdetails = await _storage.read(key: 'userdetailsfetch') ?? '';
 
@@ -341,6 +343,11 @@ class _loginScreenState extends State<loginScreen> {
     print('Strored username is $usernamestored');
     print('Strored password is $passwordstored');
     //----------
+  }
+  Future<void> deleteData()async{
+    await _storage.delete(key: 'urlvalue');
+    await _storage.delete(key: 'usernamevalue');
+    await _storage.delete(key: 'passwordvalue');
   }
 }
 

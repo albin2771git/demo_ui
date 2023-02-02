@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class StaffBirthday extends StatefulWidget {
   const StaffBirthday({super.key});
@@ -162,10 +163,9 @@ class _StaffBirthdayState extends State<StaffBirthday> {
                               onPressed: (() {}),
                             ),
                             IconButton(
-                              icon: Icon(
-                                Icons.whatsapp,
-                                color: Colors.white,
-                              ),
+                              icon: FaIcon(FontAwesomeIcons.whatsapp,color: Colors.white,),
+
+
                               onPressed: (() {}),
                             ),
                           ],

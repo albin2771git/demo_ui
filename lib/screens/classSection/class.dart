@@ -116,7 +116,7 @@ class _ClassScreenState extends State<ClassScreen> {
                         border: Border.all(
                             color: Colors.grey.shade400,
                             width: 2,
-                            strokeAlign: StrokeAlign.outside)),
+                            strokeAlign: BorderSide.strokeAlignOutside)),
                     child: Padding(
                       padding: const EdgeInsets.all(20),
                       child: Column(

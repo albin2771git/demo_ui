@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../models/student/DataFetch.dart';
 
@@ -207,11 +208,8 @@ class _StudentBirthdayState extends State<StudentBirthday> {
                     onPressed: (() {}),
                   ),
                   IconButton(
-                    icon: Icon(
-                      Icons.whatsapp,
-                      color: Colors.white,
-                    ),
-                    onPressed: (() {}),
+                    icon: FaIcon(FontAwesomeIcons.whatsapp,color: Colors.white,)
+                    ,onPressed: (() {}),
                   ),
                 ],
               )));
@@ -269,11 +267,8 @@ class _StudentBirthdayState extends State<StudentBirthday> {
                     onPressed: (() {}),
                   ),
                   IconButton(
-                    icon: Icon(
-                      Icons.whatsapp,
-                      color: Colors.white,
-                    ),
-                    onPressed: (() {}),
+                    icon:  FaIcon(FontAwesomeIcons.whatsapp,color: Colors.white,)
+                    ,onPressed: (() {}),
                   ),
                 ],
               )));
@@ -331,11 +326,8 @@ class _StudentBirthdayState extends State<StudentBirthday> {
                     onPressed: (() {}),
                   ),
                   IconButton(
-                    icon: Icon(
-                      Icons.whatsapp,
-                      color: Colors.white,
-                    ),
-                    onPressed: (() {}),
+                    icon:  FaIcon(FontAwesomeIcons.whatsapp,color: Colors.white,)
+                   , onPressed: (() {}),
                   ),
                 ],
               )));
@@ -393,10 +385,7 @@ class _StudentBirthdayState extends State<StudentBirthday> {
                     onPressed: (() {}),
                   ),
                   IconButton(
-                    icon: Icon(
-                      Icons.whatsapp,
-                      color: Colors.white,
-                    ),
+                    icon:  FaIcon(FontAwesomeIcons.whatsapp,color: Colors.white,),
                     onPressed: (() {}),
                   ),
                 ],

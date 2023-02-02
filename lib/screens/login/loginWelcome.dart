@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import 'loginScreen.dart';
+
 class LoginWelcome extends StatefulWidget {
   // String urlcall;
   //   String usernamecall;
@@ -18,6 +20,8 @@ class LoginWelcome extends StatefulWidget {
 }
 
 class _LoginWelcomeState extends State<LoginWelcome> {
+  final loginScreen methodCall= new loginScreen();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -62,9 +66,17 @@ class _LoginWelcomeState extends State<LoginWelcome> {
             color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
       )),
       body: Center(
-        child: Text(
-          'welcome $username',
-          style: TextStyle(color: Colors.white, fontSize: 21),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'welcome $username',
+              style: TextStyle(color: Colors.white, fontSize: 21),
+            ),
+            ElevatedButton(onPressed: (){
+
+            }, child:const Text("Sign out",))
+          ],
         ),
       ),
     );
